@@ -9,26 +9,30 @@ class User
   end
 
   def save
-    #save game info for all new users or update an existing user's info
-    if !@@all.include?(self)
-      @@all << self
+    #checks if the user already exists in the @@all array
+    #if it's a new user, add the user to the @@all array
+    #if a user exists, call on self.update
+    if !self.class.all.include?(self)
+      self.class.all << self
     else
       self.update
     end
   end
 
   def update
-    #update an existing object in the @@all array
-    if !@@all.index(self).nil?
-      @@all[@@all.index(self)] = self
+    #updates a user's info in the @@all array
+    if !self.class.all.index(self).nil?
+      self.class.all[self.class.all.index(self)] = self
     end
   end
 
   def add_win
+    #increases count of wins for a user
     @wins += 1
   end
 
   def add_loss
+    #increases count of losses for a user
     @losses += 1
   end
 
@@ -37,6 +41,7 @@ class User
   end
 
   def self.find_by_name(user_name)
+    #finds a user's name in the @@all array
     self.all.each do |user|
       if user.name == user_name
         return user.name
@@ -44,4 +49,8 @@ class User
     end
   end
 
+  def display_player_stat
+    #displays the stats for a player
+    puts "Player Name: #{name} Wins: #{wins} Losses: #{losses}"
+  end
 end

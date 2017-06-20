@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
-require './config/environment.rb'
-require_all 'app'
+require '../config/environment.rb'
+require_all '../app'
 
 game = Game.new
+drawing = Drawing.new
 while game.wants_to_play
   if game.user.name.nil?
     game.welcome
@@ -11,15 +12,17 @@ while game.wants_to_play
   while game.game_status
     game.user_input
     game.check_letter
-    # binding.pry
-    game.hangman_drawing
+    drawing.wrong_answers = game.wrong_answers
+    drawing.hangman_drawing
   end
   if game.has_won
     puts "you won the thing"
     game.save
+    game.user.display_player_stat
   elsif game.has_lost
     puts "you lost the thing"
     game.save
+    game.user.display_player_stat
   else
     puts "you broke the thing"
   end
