@@ -27,6 +27,8 @@ class User
   end
 
   def add_win
+    # NOTE this data could be derived from number of games a user has played.
+
     #increases count of wins for a user
     @wins += 1
   end
@@ -42,6 +44,7 @@ class User
 
   def self.find_by_name(user_name)
     #finds a user's name in the @@all array
+    # NOTE use select.
     self.all.each do |user|
       if user.name == user_name
         return user.name

@@ -1,5 +1,9 @@
 class Game
   attr_accessor :users_name, :user_input, :chosen_word, :game_status, :word_in_progress, :wrong_answers, :has_won, :has_lost, :user, :wants_to_play, :guessed_array
+  # NOTE these attributes reveal that would have multiple objects
+    # For example, look to the preceding words
+    # preceding words like user suggest they should be in the user object
+    # wrong_answers, and guessed maybe are part of the same object as well, as is word in progress, and guessed array
 
   VALID_LETTERS = ('a'..'z').to_a
 
@@ -10,6 +14,7 @@ class Game
     @wants_to_play = true
     @user = User.new
     @guessed_array = []
+      # NOTE initializing array as instance variable is tip off that should be a new object
   end
 
   def welcome
@@ -28,6 +33,7 @@ class Game
     end
     @user.name = @users_name
   end
+  # NOTE should be in the user class
 
   def generate_word
     #randomly selects a word for the game
@@ -80,6 +86,7 @@ class Game
   def merge_answers(ans1, ans2)
     #combines multiple guesses and outputs one string of the word being guessed
     ans_to_return = []
+    # NOTE sandwich code
     ans1.split('').each_with_index do |item, index|
       if ans2.split('')[index] != '_' && ans1.split('')[index] == '_'
         item = ans2.split('')[index]
@@ -87,6 +94,7 @@ class Game
       ans_to_return << item
     end
     ans_to_return.join
+    # NOTE Would break this into steps and then code
   end
 
   def generic_letter_check(word)
@@ -104,6 +112,8 @@ class Game
   def check_letter
     #checks if the guessed letter matches a letter in the word and replaces
     #any blanks with the appropriate letter
+
+    # NOTE nested if statements, the "and" in your comment suggests the method is doing too much.
     if @word_in_progress.nil?
       @word_in_progress = generic_letter_check(@chosen_word)
       if @word_in_progress.delete('_').empty?
@@ -119,6 +129,7 @@ class Game
       end
     end
     puts @word_in_progress
+
   end
 
 
@@ -136,16 +147,19 @@ class Game
 
   def save
     #calls on save method from User class to save a user's game
+
     puts "Would you like to play again? Y/N"
     @user_input = gets.chomp.downcase
     if @user_input == "y" || @user_input == "yes"
       self.determine_w_or_l
+      # NOTE looks like repetition
     elsif @user_input == "n" || @user_input == "no"
       self.determine_w_or_l
       @wants_to_play = false
     else
       puts "Invalid input. Please try again."
       self.save
+      # this calls the same method?
     end
   end
 end

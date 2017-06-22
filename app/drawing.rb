@@ -1,6 +1,6 @@
 class Drawing
   attr_accessor :wrong_answers
-  
+
   def hangman_drawing
     #shows appropriate hangman illustration based on the number of incorrect
     #guesses by the user
@@ -8,6 +8,7 @@ class Drawing
     #www.berkeleyinternet.com/perl/node30.html
     case @wrong_answers
       when 0
+        # NOTE these can be moved into separate methods or objects.  
           puts "0000000000000"
           puts "0           0"
           puts "0"
